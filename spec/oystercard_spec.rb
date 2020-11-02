@@ -25,10 +25,6 @@ describe Oystercard do
     expect { subject.top_up(1) }.to raise_error(StandardError)
   end
 
-  it "Balance decreases by correct amount when deduct method is called" do
-    expect { subject.deduct(10) }.to change { subject.balance }.by(-10)
-  end
-
   it "Is not in journey by default" do
     expect(subject.in_journey?).to eq(false)
   end
@@ -46,6 +42,10 @@ describe Oystercard do
 
   it "Should raise an error if touching in with insufficient funds" do
     expect { subject.touch_in }.to raise_error(StandardError)
+  end
+
+  it "Should deduct £1 after touching out" do
+    expect { card_with_money.touch_out }.to change { card_with_money.balance }.by(-1)
   end
 
 end
