@@ -1,6 +1,7 @@
 class Oystercard
   attr_reader :balance
   MAX_BALANCE = 90
+  MIN_FOR_JOURNEY = 1
 
   def initialize(balance = 0)
     @balance = balance
@@ -21,6 +22,7 @@ class Oystercard
   end
 
   def touch_in
+    raise StandardError.new "You need at least £#{MIN_FOR_JOURNEY} to touch in" if @balance < MIN_FOR_JOURNEY
     @in_journey = true
   end
 
