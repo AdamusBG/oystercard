@@ -18,6 +18,10 @@ describe Oystercard do
     expect { subject.top_up(5) }.to change { subject.balance }.by(5)
   end
 
+  it "Maximum balance constant should be set at 90" do
+    expect(Oystercard::MAX_BALANCE).to eq(90)
+  end
+
   it "Should raise an error if topped up above maximum balance of 90" do
     expect { subject.top_up(91) }.to raise_error(StandardError)
   end
