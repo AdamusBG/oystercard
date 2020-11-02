@@ -2,6 +2,7 @@ require 'oystercard'
 
 describe Oystercard do
   let(:card_with_money) { Oystercard.new(10) }
+  let(:station) { double :station }
 
   it "Is an instance of the oystercard class" do
     expect(subject).to be_instance_of(Oystercard)
@@ -30,22 +31,27 @@ describe Oystercard do
   end
 
   it "Is in journey after touching in" do
-    card_with_money.touch_in
+    card_with_money.touch_in(station)
     expect(card_with_money.in_journey?).to eq(true)
   end
 
   it "Ends journey after touching out" do
-    card_with_money.touch_in
+    card_with_money.touch_in(station)
     card_with_money.touch_out
     expect(card_with_money.in_journey?).to eq(false)
   end
 
   it "Should raise an error if touching in with insufficient funds" do
-    expect { subject.touch_in }.to raise_error(StandardError)
+    expect { subject.touch_in(station) }.to raise_error(StandardError)
   end
 
   it "Should deduct £1 after touching out" do
     expect { card_with_money.touch_out }.to change { card_with_money.balance }.by(-1)
+  end
+
+  it "Should remember entry station after touching in" do
+    card_with_money.touch_in(station)
+    expect(card_with_money.entry_station).to eq(station)
   end
 
 end
