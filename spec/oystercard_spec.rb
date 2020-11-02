@@ -23,7 +23,7 @@ describe Oystercard do
   end
 
   it "Should raise an error if topped up above maximum balance" do
-    maximum_balance = Oystercard::MAXIMUM_BALANCE
+    maximum_balance = Oystercard::MAX_BALANCE
     subject.top_up(maximum_balance)
     expect { subject.top_up(1) }.to raise_error(StandardError)
   end
