@@ -10,10 +10,6 @@ describe Oystercard do
     expect(subject.balance).to eq(0)
   end
 
-  it "Responds to .top_up method" do
-    expect(subject).to respond_to(:top_up).with(1).argument
-  end
-
   it "Balance increases by 5 when topped up by 5" do
     expect { subject.top_up(5) }.to change { subject.balance }.by(5)
   end
@@ -26,6 +22,10 @@ describe Oystercard do
     maximum_balance = Oystercard::MAX_BALANCE
     subject.top_up(maximum_balance)
     expect { subject.top_up(1) }.to raise_error(StandardError)
+  end
+
+  it "Balance decreases by correct amount when deduct method is called" do
+    expect { subject.deduct(10) }.to change { subject.balance }.by(-10)
   end
 
 end
