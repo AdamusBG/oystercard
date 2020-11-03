@@ -19,8 +19,7 @@ class Journey
 
   private
   def penalty?
-    return true if @entry_station == nil || @exit_station == nil
-    return false
+    !@entry_station || !@exit_station
   end
 
 end

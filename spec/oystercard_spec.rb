@@ -65,12 +65,12 @@ describe Oystercard do
   end
 
   it "Should charge penalty fare of £#{Journey::PENALTY_FARE} if touching out with no touch in" do
-    expect {card_with_money.touch_out(station) }.to change { card_with_money.balance }.by(-6)
+    expect {card_with_money.touch_out(station) }.to change { card_with_money.balance }.by(-Journey::PENALTY_FARE)
   end
 
   it "Should charge penalty fare of £#{Journey::PENALTY_FARE} if touching in twice" do
     card_with_money.touch_in(station)
-    expect {card_with_money.touch_in(station) }.to change { card_with_money.balance }.by(-6)
+    expect {card_with_money.touch_in(station) }.to change { card_with_money.balance }.by(-Journey::PENALTY_FARE)
   end
 
 end
