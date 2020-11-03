@@ -37,7 +37,7 @@ describe Oystercard do
 
   it "Ends journey after touching out" do
     card_with_money.touch_in(station)
-    card_with_money.touch_out
+    card_with_money.touch_out(station)
     expect(card_with_money.in_journey?).to eq(false)
   end
 
@@ -46,12 +46,21 @@ describe Oystercard do
   end
 
   it "Should deduct £1 after touching out" do
-    expect { card_with_money.touch_out }.to change { card_with_money.balance }.by(-1)
+    expect { card_with_money.touch_out(station) }.to change { card_with_money.balance }.by(-1)
   end
 
   it "Should remember entry station after touching in" do
     card_with_money.touch_in(station)
     expect(card_with_money.entry_station).to eq(station)
+  end
+
+  it "Should have an empty journey list by default" do
+    expect(subject.journeys.length).to eq(0)
+  end
+
+  it "Touching in and out should create one journey" do
+    card_with_money.touch_in(station)
+    expect { card_with_money.touch_out(station) }.to change { card_with_money.journeys.length }.by(1)
   end
 
 end
